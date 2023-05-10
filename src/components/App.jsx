@@ -10,9 +10,6 @@ import * as API from "../services/pixabay_api";
 
 import {AppWrapper} from "./App.styled"
 
-// const BACK_END_URL = 'https://pixabay.com/api/'
-// const API_KEY = '29743912-8e7685db13f3781653d214456'
-
 export class App extends React.Component {
 
   state = {
@@ -24,15 +21,6 @@ export class App extends React.Component {
     error: null,
   }
 
-  // async foundPicture(inputValue){
-  //   this.setState({loading: true})
-  //   const url = `${BACK_END_URL}/?key=${API_KEY}&q=${inputValue}&image_type=photo&orientation=horizontal&safesearch=true&per_page=12&page=1`
-  //   const response = await fetch(url);
-  //   const data = await response.json();
-  //   // console.log(data)
-  //   this.setState({ pictures: [...data.hits] });
-  //   this.setState({loading: false})
-  // }
 
   onOpenLargeImg = (url) => {
     this.setState({
@@ -73,8 +61,6 @@ export class App extends React.Component {
         isLoading: true,
       });
       const images = await API.loadImage(query, page);
-      // console.log(query)
-      // console.log(images)
       this.setState(prevState => ({
         items: [...prevState.items, ...images],
         isLoading: false,
@@ -115,7 +101,7 @@ export class App extends React.Component {
 
         {isLoading && <Loader/>}
 
-        {items.length > 0 && <Button onLoadMore={this.onLoadMoreBtn} isLoading={isLoading}/>}
+        {items.length >= 12 && <Button onLoadMore={this.onLoadMoreBtn} isLoading={isLoading}/>}
         {currentLargeImageURL && <Modal onClose={this.toggleModal} url={currentLargeImageURL} />}
 
         {/* {this.state.isLoading && <Loader/>} */}
